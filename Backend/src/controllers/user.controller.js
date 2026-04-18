@@ -47,7 +47,7 @@ export const loginUser = async (req, res) => {
 
   const token = jwt.sign(user, process.env.SECRET_KEY,{expiresIn:'7d'})
 
-  res.status(200).json({message:'Login successful', user, token})
+  res.status(200).json({message:'Login success!', user, token})
 
 
   
