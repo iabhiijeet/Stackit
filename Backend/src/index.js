@@ -1,23 +1,21 @@
 import express from 'express';
-import connectdb from './utils/db.js'
+import connectdb from './utils/db.js';
 import dotenv from 'dotenv';
-dotenv.config();
-const app = express();
 
+dotenv.config();
+
+const app = express();
 app.use(express.json());
 
 import userRoutes from './routes/user.route.js';
-
-
+import orgRoutes from './routes/org.route.js';
 app.use('/api/user', userRoutes);
+app.use('/api/org', orgRoutes);
 
+const port = 4000;  // ← fallback added
 
-const port = process.env.PORT;
-app.listen(port,()=>{
+app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
-})
-
-
+});
 
 connectdb();
-

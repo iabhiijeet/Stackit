@@ -8,11 +8,11 @@ export const registrUser = async (req, res) => {
   if(!name || !email || !password || !confirmPassword) {
     return res.status(400).json({ message: 'All fields are required' });
   }
-  if(password !== confirmPassword) {
+  if(password != confirmPassword) {
     return res.status(400).json({ message: 'Passwords do not match' });
   }
 
-  const hashedPassword = awaitbcrypt.hash(password, process.env.hash);
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   const user = new User({
     name,
@@ -20,7 +20,7 @@ export const registrUser = async (req, res) => {
     password:hashedPassword
   })
 
-  const token = jwt.sign(user, process.env.SECRET_KEY,{expiresIn:'7d'})
+  const token = jwt.sign({user}, process.env.SECRET_KEY,{expiresIn:'7d'})
 
 
 
@@ -40,18 +40,12 @@ export const loginUser = async (req, res) => {
     return res.status(400).json({'message':'Email not found!'})
   }
 
-  const isMatch = await bcrypt.compare(user.password, hashedPassword)
+  const isMatch = await bcrypt.compare(password, user.password);
   if(!isMatch){
     return res.status(400).json({'message':'Password is incorrect!'})
   }
 
-  const token = jwt.sign(user, process.env.SECRET_KEY,{expiresIn:'7d'})
+  const token = jwt.sign({user}, process.env.SECRET_KEY,{expiresIn:'7d'})
 
   res.status(200).json({message:'Login success!', user, token})
-
-
-  
-
-
-
 }
