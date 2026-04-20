@@ -15,7 +15,7 @@ const orgSchema = new Mongoose.Schema({
     ref:'User'
   },
   members:{
-    type:Mongoose.Types.ObjectId,
+    type:[Mongoose.Types.ObjectId],
     ref:'User'
   }
 })
