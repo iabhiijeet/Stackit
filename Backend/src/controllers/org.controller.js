@@ -145,6 +145,8 @@ export const getBoardsInOrg = async(req,res)=>{
   }
 }
 
-export const deleteBoardInOrg = async(req,res)=>{}
+export const deleteBoardInOrg = async(req,res)=>{
+  const id = req.params.id;
+}
 
 export const createIssueInBoard = async(req,res)=>{}
